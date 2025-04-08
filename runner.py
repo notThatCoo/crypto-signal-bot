@@ -7,7 +7,7 @@ from models import logistic_model, random_forest
 
 # === CONFIG ===
 webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'  # Your real webhook
-log_file = "prediction_logs.csv"
+log_file = "logs/prediction_logs.csv"
 
 # === STEP 1: Get Data ===
 data = fetch_crypto_data(symbol='BTC/USDT', timeframe='1h', limit=500)
