@@ -22,4 +22,4 @@ def run_model(data):
     prob = model.predict_proba(latest_features)[0][1]
     signal = int(prob > 0.5)
 
-    return signal, prob
+    return signal, prob, data
