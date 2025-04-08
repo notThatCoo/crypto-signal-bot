@@ -1,0 +1,9 @@
+timestamp,model,signal,prob,actual_up,next_return
+2025-04-08 14:00:08.866243,Logistic Regression,0,0.4919,0,
+2025-04-08 14:00:09.363624,Random Forest,0,0.4991,0,
+2025-04-08 14:00:14.974693,Logistic Regression,0,0.4919,0,
+2025-04-08 14:00:15.418562,Random Forest,0,0.4991,0,
+2025-04-08 14:04:54.443807,Logistic Regression,0,0.4936,0,
+2025-04-08 14:04:54.817914,Random Forest,1,0.5138,0,
+2025-04-08 14:07:18.955330,Logistic Regression,0,0.4938,0,
+2025-04-08 14:07:19.434789,Random Forest,1,0.5314,0,
