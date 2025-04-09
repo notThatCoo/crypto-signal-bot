@@ -8,6 +8,11 @@ from core.discord_notifier import send_discord_message
 
 webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'  # Your real webhook
 
+initial_cash = 1000  # Start with $1,000
+df['Simulated_Balance'] = initial_cash * df['Cumulative_Strategy']
+
+final_balance = df['Simulated_Balance'].iloc[-1]
+print(f"💰 Simulated final balance: ${final_balance:.2f}")
 
 # === Config ===
 model_to_run = {
@@ -81,10 +86,5 @@ print(f"  - Sharpe Ratio: {sharpe_ratio:.2f}")
 
 print("✅ Backtest complete. Results saved to /logs/")
 
-initial_cash = 1000  # Start with $1,000
-df['Simulated_Balance'] = initial_cash * df['Cumulative_Strategy']
-
-final_balance = df['Simulated_Balance'].iloc[-1]
-print(f"💰 Simulated final balance: ${final_balance:.2f}")
 
 
