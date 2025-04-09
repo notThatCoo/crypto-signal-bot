@@ -1,0 +1,4 @@
+timestamp,model,signal,probability,return,balance
+2025-04-09 10:53:27.007403,Random Forest,1,0.5789,-0.00387,996.13
+2025-04-09 10:54:00.250271,Random Forest,1,0.5231,-0.00242,993.72
+2025-04-09 11:00:08.930659,Random Forest,0,0.4207,0,993.72
