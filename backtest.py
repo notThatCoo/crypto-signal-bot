@@ -4,6 +4,10 @@ from core.data_fetcher import fetch_crypto_data
 from models import logistic_model, random_forest
 from sklearn.metrics import accuracy_score
 import numpy as np
+from core.discord_notifier import send_discord_message
+
+webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'  # Your real webhook
+
 
 # === Config ===
 model_to_run = {
@@ -30,6 +34,17 @@ for name, model in model_to_run.items():
 
     results[name] = df[['Cumulative_Strategy', 'Cumulative_BuyHold']]
     df.to_csv(f'logs/backtest_{name.lower().replace(" ", "_")}.csv')
+    
+    msg = f"""
+    🧪 **Backtest Report: {name}**
+    - Final Balance: ${final_balance:.2f}
+    - Accuracy: {acc:.2f}
+    - Sharpe: {sharpe_ratio:.2f}
+    - Strategy Return: {final_return:.2f}x
+    - Buy & Hold: {buyhold_return:.2f}x
+    """
+    send_discord_message(webhook_url, msg)
+
 
 # === Plotting ===
 plt.figure(figsize=(10, 6))
@@ -72,12 +87,4 @@ df['Simulated_Balance'] = initial_cash * df['Cumulative_Strategy']
 final_balance = df['Simulated_Balance'].iloc[-1]
 print(f"💰 Simulated final balance: ${final_balance:.2f}")
 
-msg = f"""
-🧪 **Backtest Report: {name}**
-- Final Balance: ${final_balance:.2f}
-- Accuracy: {acc:.2f}
-- Sharpe: {sharpe_ratio:.2f}
-- Strategy Return: {final_return:.2f}x
-- Buy & Hold: {buyhold_return:.2f}x
-"""
-send_discord_message(webhook_url, msg)
+
