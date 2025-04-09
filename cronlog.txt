@@ -6,3 +6,23 @@ Logistic Regression: Signal 0, Prob 0.50
 Random Forest: Signal 1, Prob 0.54
 Error in Logistic Regression: too many values to unpack (expected 2)
 Error in Random Forest: too many values to unpack (expected 2)
+Logistic Regression: Signal 0, Prob 0.50
+Random Forest: Signal 1, Prob 0.52
+Logistic Regression: Signal 1, Prob 0.50
+Random Forest: Signal 0, Prob 0.43
+Logistic Regression: Signal 1, Prob 0.51
+Random Forest: Signal 0, Prob 0.40
+Logistic Regression: Signal 1, Prob 0.51
+Random Forest: Signal 0, Prob 0.43
+Logistic Regression: Signal 1, Prob 0.51
+Random Forest: Signal 0, Prob 0.38
+Logistic Regression: Signal 1, Prob 0.50
+Random Forest: Signal 0, Prob 0.50
+Logistic Regression: Signal 1, Prob 0.51
+Random Forest: Signal 0, Prob 0.49
+Logistic Regression: Signal 1, Prob 0.52
+Random Forest: Signal 0, Prob 0.43
+Logistic Regression: Signal 1, Prob 0.51
+Random Forest: Signal 0, Prob 0.43
+Logistic Regression: Signal 1, Prob 0.51
+Random Forest: Signal 1, Prob 0.58
