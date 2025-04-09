@@ -4,6 +4,10 @@ from datetime import datetime
 from core.data_fetcher import fetch_crypto_data
 from core.discord_notifier import send_discord_message
 from models import logistic_model, random_forest
+from core.wallet_tracker import Wallet
+
+wallet = Wallet(starting_cash=1000)
+
 
 # === CONFIG ===
 webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'  # Your real webhook
@@ -49,6 +53,22 @@ for name, module in models.items():
         msg = f"**{name}**\nProb: `{prob:.2f}` → Signal: `{signal}` {emoji}"
         send_discord_message(webhook_url, msg)
         print(f"{name}: Signal {signal}, Prob {prob:.2f}")
+
+    price = data['close'].iloc[-1]
+    timestamp = datetime.utcnow()
+
+    if signal == 1 and wallet.crypto == 0.0:
+        wallet.buy(price, timestamp, name, prob)
+    elif signal == 0 and wallet.crypto > 0.0:
+        wallet.sell(price, timestamp, name, prob)
+
+    msg = f"""
+    💼 Wallet Value: ${wallet.value(price):.2f}
+    💰 Cash: ${wallet.cash:.2f}
+    🪙 Crypto: {wallet.crypto:.6f}
+    """
+    send_discord_message(webhook_url, msg)
+
 
     except Exception as e:
         send_discord_message(webhook_url, f"❌ Error in {name}: {str(e)}")
