@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from core.data_fetcher import fetch_crypto_data
 from models import logistic_model, random_forest
+from sklearn.metrics import accuracy_score
+import numpy as np
 
 # === Config ===
 model_to_run = {
@@ -44,4 +46,38 @@ plt.tight_layout()
 plt.savefig('logs/backtest_chart.png')
 plt.show()
 
+df['Prediction'] = df['Target']  # The model's signal
+df['Actual'] = (df['Return'].shift(-1) > 0).astype(int)
+
+# Accuracy
+acc = accuracy_score(df['Actual'].dropna(), df['Prediction'].dropna())
+final_return = df['Cumulative_Strategy'].iloc[-1]
+buyhold_return = df['Cumulative_BuyHold'].iloc[-1]
+
+# Sharpe Ratio
+excess_return = df['Strategy_Return'] - df['Return'].mean()
+sharpe_ratio = np.mean(excess_return) / np.std(excess_return) * np.sqrt(252)  # annualized
+
+print(f"📊 {name} Summary:")
+print(f"  - Accuracy: {acc:.2f}")
+print(f"  - Strategy Return: {final_return:.2f}x")
+print(f"  - Buy & Hold Return: {buyhold_return:.2f}x")
+print(f"  - Sharpe Ratio: {sharpe_ratio:.2f}")
+
 print("✅ Backtest complete. Results saved to /logs/")
+
+initial_cash = 1000  # Start with $1,000
+df['Simulated_Balance'] = initial_cash * df['Cumulative_Strategy']
+
+final_balance = df['Simulated_Balance'].iloc[-1]
+print(f"💰 Simulated final balance: ${final_balance:.2f}")
+
+msg = f"""
+🧪 **Backtest Report: {name}**
+- Final Balance: ${final_balance:.2f}
+- Accuracy: {acc:.2f}
+- Sharpe: {sharpe_ratio:.2f}
+- Strategy Return: {final_return:.2f}x
+- Buy & Hold: {buyhold_return:.2f}x
+"""
+send_discord_message(webhook_url, msg)
