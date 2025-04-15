@@ -79,7 +79,7 @@ doc.add_paragraph(
 )
 
 # Save the document
-output_path = "/mnt/data/Tolulope_Adeleye_Resume_Updated.docx"
+output_path = "Tolulope_Adeleye_Resume_Updated.docx"
 doc.save(output_path)
 
 output_path
