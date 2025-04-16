@@ -1,4 +1,5 @@
 from core.kraken_client import get_balance, get_price
+from core.kraken_client import place_market_order
 
 print("🔍 Fetching Kraken account info...")
 
@@ -17,4 +18,5 @@ print("Current BTC/USDT price:", price)
 dollar_value = btc_amount * price
 
 print(f"Dollar amount: ${dollar_value:.2f}")
-
+order = place_market_order('BTC/USDT', 'buy', 0.0001)
+print("Order result:", order)
