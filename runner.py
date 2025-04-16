@@ -109,7 +109,7 @@ for name, module in models.items():
         print(f"\n{name} Confusion Matrix:\n", cm)
         print(f"\n{name} Classification Report:\n", report)
 
-    msg = f"📊 {name} Model Evaluation | Accuracy: {acc:.2f}\n{report}"
+        msg = f"📊 {name} Model Evaluation | Accuracy: {acc:.2f}\n{report}"
 
 
-    send_discord_message(webhook_url, msg)
+        send_discord_message(webhook_url, msg)
