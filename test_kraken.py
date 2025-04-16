@@ -9,3 +9,5 @@ print("Balance:", balance['total'])
 # Print current BTC/USDT price
 price = get_price('BTC/USDT')
 print("Current BTC/USDT price:", price)
+
+print("dollar amount:" price * balance['total'])
