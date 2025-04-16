@@ -14,6 +14,8 @@ wallet = Wallet(starting_cash=1000)
 # === CONFIG ===
 webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'  # Your real webhooklog_file = "logs/prediction_logs.csv"
 db_file = "logs/trades.db"
+log_file = "logs/prediction_logs.csv"
+
 
 # === SETUP DATABASE ONCE ===
 conn = sqlite3.connect(db_file)
@@ -108,8 +110,12 @@ for name, module in models.items():
         print(f"\n{name} Classification Report:\n", report)
 
         msg = f"""
-📊 **{name} Model Evaluation**
-Accuracy: `{acc:.2f}`
+        📊 **{name} Model Evaluation**
+        Accuracy: `{acc:.2f}`
+
+        """
+
+send_discord_message(webhook_url, msg)
 
 
 
