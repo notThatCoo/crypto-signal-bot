@@ -15,3 +15,6 @@ print("Current BTC/USDT price:", price)
 
 
 dollar_value = btc_amount * price
+
+print(f"Dollar amount: ${dollar_value:.2f}")
+
