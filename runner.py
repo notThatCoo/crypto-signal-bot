@@ -68,17 +68,6 @@ for name, module in models.items():
         }])
         log_row.to_csv(log_file, mode='a', header=not os.path.exists(log_file), index=False)
         # === Log wallet value to CSV ===
-        wallet_row = pd.DataFrame([{
-            'timestamp': timestamp,
-            'model': name,
-            'value': round(wallet.value(price), 2),
-            'cash': round(wallet.cash, 2),
-            'crypto': round(wallet.crypto, 6),
-            'short_position': round(wallet.short_position, 6),
-            'price': round(price, 2)
-        }])
-        wallet_row.to_csv(wallet_log_file, mode='a', header=not os.path.exists(wallet_log_file), index=False)
-        
 
 
         
@@ -99,6 +88,19 @@ for name, module in models.items():
         # === TRADE LOGIC ===
         price = data['close'].iloc[-1]
         timestamp = datetime.utcnow()
+
+        wallet_row = pd.DataFrame([{
+            'timestamp': timestamp,
+            'model': name,
+            'value': round(wallet.value(price), 2),
+            'cash': round(wallet.cash, 2),
+            'crypto': round(wallet.crypto, 6),
+            'short_position': round(wallet.short_position, 6),
+            'price': round(price, 2)
+        }])
+        wallet_row.to_csv(wallet_log_file, mode='a', header=not os.path.exists(wallet_log_file), index=False)
+
+
         
         # === Buy Logic ===
         if signal == 1:
