@@ -1,2 +1,3 @@
 logs/prediction_logs.csv
 logs/backtest_*.csv
+.env
