@@ -15,18 +15,24 @@ class Wallet:
         self.cash = 0.0
         self.last_trade_price = price
         self.history.append((timestamp, "BUY", price, model, prob))
+        print(f"[{action}] @ {price:.2f} | Cash: {self.cash:.2f} | Crypto: {self.crypto:.6f} | Short: {self.short_position:.6f}")
+
 
     def sell(self, price, timestamp, model, prob):
         self.cash = self.crypto * price
         self.crypto = 0.0
         self.last_trade_price = price
         self.history.append((timestamp, "SELL", price, model, prob))
+        print(f"[{action}] @ {price:.2f} | Cash: {self.cash:.2f} | Crypto: {self.crypto:.6f} | Short: {self.short_position:.6f}")
+
 
     def short(self, price, timestamp, model, prob):
         self.short_position = self.cash / price
         self.cash = 0.0
         self.last_trade_price = price
         self.history.append((timestamp, "SHORT", price, model, prob))
+        print(f"[{action}] @ {price:.2f} | Cash: {self.cash:.2f} | Crypto: {self.crypto:.6f} | Short: {self.short_position:.6f}")
+
 
     def cover(self, price, timestamp, model, prob):
         pnl = self.short_position * (self.last_trade_price - price)
@@ -34,6 +40,8 @@ class Wallet:
         self.short_position = 0.0
         self.last_trade_price = price
         self.history.append((timestamp, "COVER", price, model, prob))
+        print(f"[{action}] @ {price:.2f} | Cash: {self.cash:.2f} | Crypto: {self.crypto:.6f} | Short: {self.short_position:.6f}")
+
 
     def value(self, current_price):
         if self.crypto > 0.0:
