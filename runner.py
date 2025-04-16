@@ -20,6 +20,7 @@ db_file = "logs/trades.db"
 log_file = "logs/prediction_logs.csv"
 wallet_log_file = "logs/wallet_history.csv"
 webhook_url2 = 'https://discord.com/api/webhooks/1361969632805916722/1NCsde4_Q6zBTubiDmoCeSTJLlgTxZYkVclGcIBxqff8jYa1lBnV-mfr9zYp6iV_f2Iy'
+LIVE_MODE = False  # Toggle to True for real Kraken trades
 
 
 
