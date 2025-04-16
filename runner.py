@@ -106,8 +106,8 @@ for name, module in models.items():
         report = classification_report(y_true, y_pred, digits=2)
         acc = accuracy_score(y_true, y_pred)
 
-            print(f"\n{name} Confusion Matrix:\n", cm)
-            print(f"\n{name} Classification Report:\n", report)
+        print(f"\n{name} Confusion Matrix:\n", cm)
+        print(f"\n{name} Classification Report:\n", report)
     
             msg = f"📊 {name} Model Evaluation | Accuracy: {acc:.2f}\n{report}"
         
