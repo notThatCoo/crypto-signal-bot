@@ -12,10 +12,9 @@ import sqlite3
 wallet = Wallet(starting_cash=1000)
 
 # === CONFIG ===
-webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'  # Your real 
+webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'
 db_file = "logs/trades.db"
 log_file = "logs/prediction_logs.csv"
-
 
 # === SETUP DATABASE ONCE ===
 conn = sqlite3.connect(db_file)
@@ -86,13 +85,9 @@ for name, module in models.items():
             wallet.buy(price, timestamp, name, prob)
         elif signal == 0 and wallet.crypto > 0.0:
             wallet.sell(price, timestamp, name, prob)
+
         # === Wallet Status to Discord ===
-        wallet_msg = f"""
-        💼 **Wallet Status: {name}**
-        💰 Cash: ${wallet.cash:.2f}
-        🪙 Crypto: {wallet.crypto:.6f}
-        📊 Total Value: ${wallet.value(price):.2f}
-        """
+        wallet_msg = f"💼 Wallet Status: {name} | 💰 Cash: ${wallet.cash:.2f} | 🪙 Crypto: {wallet.crypto:.6f} | 📊 Value: ${wallet.value(price):.2f}"
         send_discord_message(webhook_url, wallet_msg)
 
         # === Model Evaluation ===
@@ -108,5 +103,10 @@ for name, module in models.items():
 
         print(f"\n{name} Confusion Matrix:\n", cm)
         print(f"\n{name} Classification Report:\n", report)
-    
-        
+
+        msg = f"📊 {name} Model Evaluation | Accuracy: {acc:.2f}\n{report}"
+        send_discord_message(webhook_url, msg)
+
+    except Exception as e:
+        send_discord_message(webhook_url, f"❌ Error in {name}: {str(e)}")
+        print(f"Error in {name}: {e}")
