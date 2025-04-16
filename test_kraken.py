@@ -21,5 +21,8 @@ print(f"Dollar amount: ${dollar_value:.2f}")
 # order = place_market_order('BTC/USDT', 'buy', 0.0001)
 # print("Order result:", order)
 
+order = place_market_order('BTC/USDT', 'sell', 0.0001)
+print("Sell order result:", order)
+
 print("Available balance:", balance['free'])  # This shows usable funds
 
