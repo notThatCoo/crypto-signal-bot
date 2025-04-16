@@ -7,6 +7,7 @@ from models import logistic_model, random_forest
 from core.wallet_tracker import Wallet
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import sqlite3
+import matplotlib.pyplot as plt
 
 # === INITIALIZE WALLET ===
 wallet = Wallet(starting_cash=1000)
@@ -16,6 +17,7 @@ webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SR
 db_file = "logs/trades.db"
 log_file = "logs/prediction_logs.csv"
 wallet_log_file = "logs/wallet_history.csv"
+webhook_url2 = 'https://discord.com/api/webhooks/1361969632805916722/1NCsde4_Q6zBTubiDmoCeSTJLlgTxZYkVclGcIBxqff8jYa1lBnV-mfr9zYp6iV_f2Iy'
 
 
 # === SETUP DATABASE ONCE ===
@@ -65,7 +67,21 @@ for name, module in models.items():
             'next_return': next_return
         }])
         log_row.to_csv(log_file, mode='a', header=not os.path.exists(log_file), index=False)
+        # === Log wallet value to CSV ===
+        wallet_row = pd.DataFrame([{
+            'timestamp': timestamp,
+            'model': name,
+            'value': round(wallet.value(price), 2),
+            'cash': round(wallet.cash, 2),
+            'crypto': round(wallet.crypto, 6),
+            'short_position': round(wallet.short_position, 6),
+            'price': round(price, 2)
+        }])
+        wallet_row.to_csv(wallet_log_file, mode='a', header=not os.path.exists(wallet_log_file), index=False)
+        
 
+
+        
         # === Log to SQLite ===
         conn = sqlite3.connect(db_file)
         c = conn.cursor()
@@ -128,3 +144,20 @@ for name, module in models.items():
     except Exception as e:
         send_discord_message(webhook_url, f"❌ Error in {name}: {str(e)}")
         print(f"Error in {name}: {e}")
+
+if os.path.exists(wallet_log_file):
+    df_wallet = pd.read_csv(wallet_log_file)
+    plt.figure(figsize=(10, 6))
+    for model in df_wallet['model'].unique():
+        sub = df_wallet[df_wallet['model'] == model]
+        plt.plot(pd.to_datetime(sub['timestamp']), sub['value'], label=model)
+
+    plt.title("📈 Wallet Value Over Time")
+    plt.xlabel("Timestamp")
+    plt.ylabel("Wallet Value ($)")
+    plt.grid()
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig("logs/wallet_growth.png")
+    # Optional: send to Discord
+    send_discord_message(webhook_url2, "📈 Portfolio Growth Chart", file_path="logs/wallet_growth.png")
