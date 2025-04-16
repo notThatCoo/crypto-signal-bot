@@ -42,7 +42,8 @@ models = {
 # === STEP 3: RUN MODELS + TRADE LOGIC ===
 for name, module in models.items():
     try:
-        signal, prob, df = module.run_model(data.copy())
+        signal, prob, df, preds = module.run_model(data.copy())
+
 
         # Calculate next return (for evaluation)
         try:
