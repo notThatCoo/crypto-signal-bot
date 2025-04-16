@@ -12,7 +12,8 @@ import sqlite3
 wallet = Wallet(starting_cash=1000)
 
 # === CONFIG ===
-webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'  # Your real webhooklog_file = "logs/prediction_logs.csv"
+webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'  # Your real 
+webhooklog_file = "logs/prediction_logs.csv"
 db_file = "logs/trades.db"
 log_file = "logs/prediction_logs.csv"
 
@@ -115,7 +116,7 @@ for name, module in models.items():
 
         """
 
-send_discord_message(webhook_url, msg)
+        send_discord_message(webhook_url, msg)
 
 
 
