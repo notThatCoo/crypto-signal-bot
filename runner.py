@@ -8,6 +8,8 @@ from core.wallet_tracker import Wallet
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import sqlite3
 import matplotlib.pyplot as plt
+from core.kraken_client import get_balance, get_price, place_market_order
+
 
 # === INITIALIZE WALLET ===
 wallet = Wallet(starting_cash=1000)
@@ -163,3 +165,6 @@ if os.path.exists(wallet_log_file):
     plt.savefig("logs/wallet_growth.png")
     # Optional: send to Discord
     send_discord_message(webhook_url2, "📈 Portfolio Growth Chart", file_path="logs/wallet_growth.png")
+    
+print("Balance:", get_balance())
+print("BTC Price:", get_price())
