@@ -93,7 +93,8 @@ for name, module in models.items():
 
         # === Model Evaluation ===
         df['Actual'] = (df['Return'].shift(-1) > 0).astype(int)
-        df['Prediction'] = module.predict(df)  # or however your model returns signals
+        df['Prediction'] = preds
+  # or however your model returns signals
 
 
         y_true = df['Actual'].dropna()
