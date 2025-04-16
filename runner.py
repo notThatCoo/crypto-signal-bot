@@ -15,6 +15,8 @@ wallet = Wallet(starting_cash=1000)
 webhook_url = 'https://discord.com/api/webhooks/1357328529653628928/y3o66vxh99SRKjP7RwRz1RTT7ub2WJI8K0qa5i8uTrOu22c9-qidJreGMAUPe3Fzk17F'
 db_file = "logs/trades.db"
 log_file = "logs/prediction_logs.csv"
+wallet_log_file = "logs/wallet_history.csv"
+
 
 # === SETUP DATABASE ONCE ===
 conn = sqlite3.connect(db_file)
