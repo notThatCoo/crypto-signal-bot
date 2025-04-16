@@ -4,10 +4,8 @@ print("🔍 Fetching Kraken account info...")
 
 # Print account balance
 balance = get_balance()
+print("Balance:", balance['total'])
 
-# Try both USD and USDT since Kraken supports multiple stable coins
-usd_balance = balance['total'].get('USD', 0)
-usdt_balance = balance['total'].get('USDT', 0)
-
-print(f"USD Balance: {usd_balance}")
-print(f"USDT Balance: {usdt_balance}")
+# Print current BTC/USDT price
+price = get_price('BTC/USDT')
+print("Current BTC/USDT price:", price)
