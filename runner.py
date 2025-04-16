@@ -119,6 +119,10 @@ for name, module in models.items():
         msg = f"📊 {name} Model Evaluation | Accuracy: {acc:.2f}\n{report}"
         send_discord_message(webhook_url, msg)
 
+        print(f"\n🔎 Model: {name} | Signal: {signal} | Prob: {prob:.2f}")
+        print("Last 10 Predictions:", preds[-10:])
+
+
     except Exception as e:
         send_discord_message(webhook_url, f"❌ Error in {name}: {str(e)}")
         print(f"Error in {name}: {e}")
