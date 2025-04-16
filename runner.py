@@ -67,6 +67,18 @@ for name, module in models.items():
         }])
         log_row.to_csv(log_file, mode='a', header=not os.path.exists(log_file), index=False)
 
+        # Log wallet to file
+        wallet_row = pd.DataFrame([{
+            'timestamp': now,
+            'model': name,
+            'value': round(wallet.value(price), 2),
+            'cash': round(wallet.cash, 2),
+            'crypto': round(wallet.crypto, 6),
+            'short_position': round(wallet.short_position, 6),
+            'price': round(price, 2)
+        }])
+        wallet_row.to_csv(wallet_log_file, mode='a', header=not os.path.exists(wallet_log_file), index=False)
+
         # Log to SQLite
         conn = sqlite3.connect(db_file)
         c = conn.cursor()
@@ -94,21 +106,9 @@ for name, module in models.items():
                 elif wallet.short_position == 0.0:
                     wallet.short(price, now, name, prob)
 
-        # Log wallet
-        wallet_row = pd.DataFrame([{
-            'timestamp': now,
-            'model': name,
-            'value': round(wallet.value(price), 2),
-            'cash': round(wallet.cash, 2),
-            'crypto': round(wallet.crypto, 6),
-            'short_position': round(wallet.short_position, 6),
-            'price': round(price, 2)
-        }])
-        wallet_row.to_csv(wallet_log_file, mode='a', header=not os.path.exists(wallet_log_file), index=False)
-
-        # Discord wallet message
-        msg_wallet = f"Wallet Status: {name} | Cash: ${wallet.cash:.2f} | Crypto: {wallet.crypto:.6f} | Value: ${wallet.value(price):.2f}"
-        send_discord_message(webhook_url, msg_wallet)
+        # Wallet update
+        wallet_msg = f"Wallet Status: {name} | Cash: ${wallet.cash:.2f} | Crypto: {wallet.crypto:.6f} | Value: ${wallet.value(price):.2f}"
+        send_discord_message(webhook_url, wallet_msg)
 
         # Model evaluation
         df['Actual'] = (df['Return'].shift(-1) > 0).astype(int)
