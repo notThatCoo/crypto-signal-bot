@@ -87,6 +87,11 @@ for name, module in models.items():
         elif signal == 0 and wallet.crypto > 0.0:
             wallet.sell(price, timestamp, name, prob)
 
+        if signal == 0 and wallet.crypto == 0.0:
+            wallet.short(price, timestamp, name, prob)
+        elif signal == 1 and wallet.short_position > 0.0:
+            wallet.cover(price, timestamp, name, prob)
+
         # === Wallet Status to Discord ===
         wallet_msg = f"💼 Wallet Status: {name} | 💰 Cash: ${wallet.cash:.2f} | 🪙 Crypto: {wallet.crypto:.6f} | 📊 Value: ${wallet.value(price):.2f}"
         send_discord_message(webhook_url, wallet_msg)
