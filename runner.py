@@ -33,6 +33,23 @@ conn.close()
 
 # === FETCH DATA ===
 data = fetch_crypto_data(symbol='BTC/USDT', timeframe='1h', limit=500)
+
+# === ADD TECHNICAL INDICATORS ===
+# Relative Strength Index (RSI)
+def compute_rsi(series, period=14):
+    delta = series.diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+    rs = gain / loss
+    return 100 - (100 / (1 + rs))
+
+data['RSI'] = compute_rsi(data['close'])
+
+# Moving Average Convergence Divergence (MACD)
+ema_12 = data['close'].ewm(span=12, adjust=False).mean()
+ema_26 = data['close'].ewm(span=26, adjust=False).mean()
+data['MACD'] = ema_12 - ema_26
+
 wallet = Wallet(starting_cash=1000)
 
 # === MODELS ===
